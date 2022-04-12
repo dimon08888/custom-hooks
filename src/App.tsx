@@ -2,14 +2,15 @@ import React from 'react'
 import './App.css'
 import useToggle from './hooks/useToggle'
 import useCounter from './hooks/useCounter'
+import useArray from './hooks/useArray'
 import { useState } from 'react'
 
 function App() {
   return (
     <div className="App">
       {/* <ToggleExample /> */}
-      {/* <ArrayExample /> */}
-      <CounterExample />
+      <ArrayExample />
+      {/* <CounterExample /> */}
     </div>
   )
 }
@@ -34,21 +35,21 @@ function ToggleExample() {
 }
 
 function ArrayExample() {
-  const [array, setArray] = useState([1, 2, 3, 4, 5, 6])
+  const { array, addNumber } = useArray([1, 2, 3, 4, 5, 6])
 
-  function handleAddNumber() {
-    setArray(currentArray => [...currentArray, 7])
-    // setArray(currentArray => {
-    //   const copyArray = currentArray.slice()
-    //   copyArray.push(7)
-    //   return copyArray
-    // })
-  }
+  // function handleAddNumber() {
+  // setArray(currentArray => [...currentArray, 7])
+  // setArray(currentArray => {
+  //   const copyArray = currentArray.slice()
+  //   copyArray.push(7)
+  //   return copyArray
+  // })
+  // }
 
   return (
     <div>
-      <div>{'[' + array.join(', ') + ']'}</div>
-      <button onClick={handleAddNumber}>Add 7</button>
+      <div>{'[' + array + ']'}</div>
+      <button onClick={() => addNumber(7)}>Add 7</button>
     </div>
   )
 }

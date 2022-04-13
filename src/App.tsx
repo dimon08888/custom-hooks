@@ -3,7 +3,6 @@ import './App.css'
 import useToggle from './hooks/useToggle'
 import useCounter from './hooks/useCounter'
 import useArray from './hooks/useArray'
-import { useState } from 'react'
 
 function App() {
   return (
@@ -35,35 +34,36 @@ function ToggleExample() {
 }
 
 function ArrayExample() {
-  const { array, addNumber } = useArray([1, 2, 3, 4, 5, 6])
-
-  // function handleAddNumber() {
-  // setArray(currentArray => [...currentArray, 7])
-  // setArray(currentArray => {
-  //   const copyArray = currentArray.slice()
-  //   copyArray.push(7)
-  //   return copyArray
-  // })
-  // }
+  const { array, push, remove, update, clear, set, reset, filter } = useArray([
+    1, 2, 3, 4, 5, 6,
+  ])
 
   return (
     <div>
-      <div>{'[' + array + ']'}</div>
-      <button onClick={() => addNumber(7)}>Add 7</button>
+      <div>{'[' + array.join(', ') + ']'}</div>
+      <button onClick={() => push(7)}>Add 7</button>
+      <button onClick={() => remove(1)}>Remove second element</button>
+      <button onClick={() => update(2, 9)}>Change third element to 9</button>
+      <button onClick={clear}>Clear</button>
+      <button onClick={() => set([1, 2])}>Set to 1, 2</button>
+      <button onClick={reset}>Reset</button>
+      <button onClick={() => filter(n => n > 3)}>Kepp numbers greater than 3</button>
     </div>
   )
 }
 
 function CounterExample() {
-  const { value, incrementValue, decrementValue, resetValue, doubleValue, set } =
-    useCounter(10)
+  const [someNumber, setSomeNumber] = React.useState(5)
+  const { value, increment, decrement, reset, double, set } = useCounter(someNumber)
+
   return (
     <div>
       <div>{value}</div>
-      <button onClick={() => incrementValue(value)}>Plus</button>
-      <button onClick={() => decrementValue(value)}>Minus</button>
-      <button onClick={() => resetValue(value)}>Reset</button>
-      <button onClick={() => doubleValue(value)}>Double</button>
+      <button onClick={() => setSomeNumber(10)}>Set someNumber to 10</button>
+      <button onClick={() => increment()}>Plus</button>
+      <button onClick={() => decrement()}>Minus</button>
+      <button onClick={reset}>Reset</button>
+      <button onClick={double}>Double</button>
       <button onClick={() => set(20)}>Set to 20</button>
     </div>
   )

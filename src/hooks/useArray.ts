@@ -1,17 +1,13 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 export default function useArray<Type>(initialValue: Type[]) {
   const [initialValueCopy] = useState(initialValue)
   const [array, setArray] = useState(initialValue)
 
-  function push(value: Type) {
-    // setArray(currentArray => {
-    //   const copyArray = currentArray.slice()
-    //   copyArray.push(7)
-    //   return copyArray
-    // })
-    setArray(currentArray => [...currentArray, value])
-  }
+  const push = useCallback(
+    (value: Type) => setArray(currentArray => [...currentArray, value]),
+    [],
+  )
 
   function remove(index: number) {
     // setArray(currentArray => {

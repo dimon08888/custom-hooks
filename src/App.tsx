@@ -12,6 +12,9 @@ import useArray from './hooks/useArray'
 import useStateWithHistory from './hooks/useStateWithHistory'
 import useLocalStorage from './hooks/useLocalStorage'
 import useMergedState from './hooks/useMergedState'
+import usePrevious from './hooks/usePrevious'
+import useMounted from './hooks/useMounted'
+import useUpdateEffect from './hooks/useUpdateEffect'
 
 function App() {
   return (
@@ -20,7 +23,9 @@ function App() {
       {/* <ArrayExample /> */}
       {/* <CounterExample /> */}
       {/* <StateWithHistoryExample /> */}
-      <MergedStateExample />
+      {/* <MergedStateExample /> */}
+      {/* <PreviousExample /> */}
+      <UpdateEffectExample />
       {/* <LocalStorageExample /> */}
     </div>
   )
@@ -191,6 +196,44 @@ function MergedStateExample() {
         <br />
         <button type="submit">Submit</button>
       </form>
+    </div>
+  )
+}
+
+function PreviousExample() {
+  const { value, increment, decrement } = useCounter(5)
+  const previous = usePrevious(value)
+
+  return (
+    <div>
+      <div>
+        Current: {value}, Previous: {previous}
+      </div>
+      <button onClick={() => increment()}>Plus</button>
+      <button onClick={() => decrement()}>Minus</button>
+    </div>
+  )
+}
+
+function UpdateEffectExample() {
+  const { value, increment, decrement } = useCounter(5)
+  // const isMounted = useMounted()
+
+  // React.useEffect(() => {
+  //   console.log('Counter changed to ' + value)
+  // }, [value])
+
+  useUpdateEffect(() => {
+    console.log('Counter changed to ' + value)
+  }, [value])
+
+  // console.log({ isMounted })
+
+  return (
+    <div>
+      <div>{value}</div>
+      <button onClick={() => increment()}>Plus</button>
+      <button onClick={() => decrement()}>Minus</button>
     </div>
   )
 }

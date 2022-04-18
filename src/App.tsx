@@ -1,10 +1,17 @@
-import React from 'react'
+// HOMEWORK
+
+// 1. write useSessionStorage without peeking at useLocalStorage source code
+// 2. try useStateWithHistory
+// 3. useMergedState
+
+import React, { useState } from 'react'
 import './App.css'
 import useToggle from './hooks/useToggle'
 import useCounter from './hooks/useCounter'
 import useArray from './hooks/useArray'
 import useStateWithHistory from './hooks/useStateWithHistory'
 import useLocalStorage from './hooks/useLocalStorage'
+import useMergedState from './hooks/useMergedState'
 
 function App() {
   return (
@@ -13,7 +20,8 @@ function App() {
       {/* <ArrayExample /> */}
       {/* <CounterExample /> */}
       {/* <StateWithHistoryExample /> */}
-      <LocalStorageExample />
+      <MergedStateExample />
+      {/* <LocalStorageExample /> */}
     </div>
   )
 }
@@ -111,15 +119,91 @@ function LocalStorageExample() {
   )
 }
 
-// const Component = React.memo((props: { removeCounter?: () => void }) => {
-//   console.log('RENDER')
-//   return (
-//     <div>
-//       Component
-//       <button onClick={props.removeCounter}>Remove from local storage</button>
-//     </div>
-//   )
-// })
+function MergedStateExample() {
+  // const [state, setState] = useState({
+  //   username: '',
+  //   email: '',
+  //   password: '',
+  // })
+
+  const [mergedState, setMergedState] = useMergedState({
+    username: '',
+    email: '',
+    password: '',
+  })
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    console.log(mergedState)
+  }
+
+  // const onUsernameChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+  //   setState(state => ({ ...state, username: e.target.value }))
+  // }
+
+  // const onEmailChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+  //   setState(state => ({ ...state, email: e.target.value }))
+  // }
+
+  // const onPasswordChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+  //   setState(state => ({ ...state, password: e.target.value }))
+  // }
+
+  // const onChange = (e: React.ChangeEvent<HTMLInputElement>, name: keyof typeof state) => {
+  //   setState(state => ({ ...state, [name]: e.target.value }))
+  // }
+
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+    setMergedState({ [e.target.name]: e.target.value })
+    // setState(state => ({ ...state, [e.target.name]: e.target.value }))
+  }
+
+  return (
+    <div>
+      <Component setMergedState={setMergedState} />
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="username"
+          value={mergedState.username}
+          onChange={onChange}
+          // onChange={e => onChange(e, 'username')}
+          // onChange={onUsernameChange}
+        />{' '}
+        <br />
+        <input
+          type="email"
+          name="email"
+          value={mergedState.email}
+          onChange={onChange}
+          // onChange={e => onChange(e, 'email')}
+          // onChange={onEmailChange}
+        />{' '}
+        <br />
+        <input
+          type="password"
+          name="password"
+          value={mergedState.password}
+          onChange={onChange}
+          // onChange={e => onChange(e, 'password')}
+          // onChange={onPasswordChange}
+        />{' '}
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  )
+}
+
+const Component = React.memo((props: any) => {
+  console.log('RENDER')
+  return (
+    <div>
+      Component
+      <button onClick={props.setMergedState}>Set Merged State</button>
+    </div>
+  )
+})
 
 // function Component(props: { removeCounter?: () => void }) {
 //   console.log('RENDER')

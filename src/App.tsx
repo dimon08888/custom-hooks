@@ -15,6 +15,7 @@ import useMergedState from './hooks/useMergedState'
 import usePrevious from './hooks/usePrevious'
 import useMounted from './hooks/useMounted'
 import useUpdateEffect from './hooks/useUpdateEffect'
+import { count } from 'console'
 
 function App() {
   return (
@@ -22,10 +23,10 @@ function App() {
       {/* <ToggleExample /> */}
       {/* <ArrayExample /> */}
       {/* <CounterExample /> */}
-      {/* <StateWithHistoryExample /> */}
+      <StateWithHistoryExample />
       {/* <MergedStateExample /> */}
       {/* <PreviousExample /> */}
-      <UpdateEffectExample />
+      {/* <UpdateEffectExample /> */}
       {/* <LocalStorageExample /> */}
     </div>
   )
@@ -92,24 +93,26 @@ function CounterExample() {
   )
 }
 
-// function StateWithHistoryExample() {
-//   const [count, setCount, { forward, back, go, history }] = useStateWithHistory(1, 10)
+function StateWithHistoryExample() {
+  const [count, setCount, { forward, back, go, history, pointer }] = useStateWithHistory(
+    1,
+    10,
+  )
 
-//   return (
-//     <div>
-//       <div>{count}</div>
-//       <div>{history.join(', ')}</div>
+  return (
+    <div>
+      <div>Value: {count}</div>
+      <div>Pointer: {pointer}</div>
+      <div>{'[' + history.join(', ') + ']'}</div>
 
-//       <button onClick={() => setCount(currentCount => currentCount * 2)}>Double</button>
-//       <button onClick={() => setCount(currentCount => currentCount + 1)}>
-//         Increment
-//       </button>
-//       <button onClick={back}>Back</button>
-//       <button onClick={forward}>Forward</button>
-//       <button onClick={() => go(2)}>Go to 3</button>
-//     </div>
-//   )
-// }
+      <button onClick={() => setCount(currentCount => currentCount * 2)}>Double</button>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={back}>Back</button>
+      <button onClick={forward}>Forward</button>
+      <button onClick={() => go(2)}>Go to 3</button>
+    </div>
+  )
+}
 
 function LocalStorageExample() {
   const [counter, setCounter, removeCounter] = useLocalStorage('counter', 0)

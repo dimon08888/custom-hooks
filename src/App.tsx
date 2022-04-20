@@ -1,29 +1,24 @@
-// HOMEWORK
-
-// 1. write useSessionStorage without peeking at useLocalStorage source code
-// 2. try useStateWithHistory
-// 3. useMergedState
-
-import React, { useState } from 'react'
+import React from 'react'
 import './App.css'
-import useToggle from './hooks/useToggle'
-import useCounter from './hooks/useCounter'
 import useArray from './hooks/useArray'
-import useStateWithHistory from './hooks/useStateWithHistory'
+import useCounter from './hooks/useCounter'
 import useLocalStorage from './hooks/useLocalStorage'
 import useMergedState from './hooks/useMergedState'
 import usePrevious from './hooks/usePrevious'
-import useMounted from './hooks/useMounted'
+import useRenderCount from './hooks/useRenderCount'
+import useStateWithHistory from './hooks/useStateWithHistory'
+import useToggle from './hooks/useToggle'
 import useUpdateEffect from './hooks/useUpdateEffect'
-import { count } from 'console'
 
 function App() {
   return (
     <div className="App">
       {/* <ToggleExample /> */}
       {/* <ArrayExample /> */}
-      {/* <CounterExample /> */}
-      <StateWithHistoryExample />
+      <CounterExample />
+      <hr />
+      {/* <StateWithHistoryExample /> */}
+      <RenderCountExample />
       {/* <MergedStateExample /> */}
       {/* <PreviousExample /> */}
       {/* <UpdateEffectExample /> */}
@@ -79,10 +74,12 @@ function ArrayExample() {
 function CounterExample() {
   const [someNumber, setSomeNumber] = React.useState(5)
   const { value, increment, decrement, reset, double, set } = useCounter(someNumber)
+  const renderCount = useRenderCount()
 
   return (
     <div>
       <div>{value}</div>
+      <div>Render: {renderCount}</div>
       <button onClick={() => setSomeNumber(10)}>Set someNumber to 10</button>
       <button onClick={() => increment()}>Plus</button>
       <button onClick={() => decrement()}>Minus</button>
@@ -110,6 +107,19 @@ function StateWithHistoryExample() {
       <button onClick={back}>Back</button>
       <button onClick={forward}>Forward</button>
       <button onClick={() => go(2)}>Go to 3</button>
+    </div>
+  )
+}
+
+function RenderCountExample() {
+  const [boolean, toggle] = useToggle(false)
+  const renderCount = useRenderCount()
+
+  return (
+    <div>
+      <div>{boolean.toString()}</div>
+      <div>Render: {renderCount}</div>
+      <button onClick={() => toggle()}>Toggle</button>
     </div>
   )
 }

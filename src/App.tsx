@@ -7,6 +7,7 @@ import useMergedState from './hooks/useMergedState'
 import usePrevious from './hooks/usePrevious'
 import useRenderCount from './hooks/useRenderCount'
 import useStateWithHistory from './hooks/useStateWithHistory'
+import useStateWithValidation from './hooks/useStateWithValidation'
 import useToggle from './hooks/useToggle'
 import useUpdateEffect from './hooks/useUpdateEffect'
 
@@ -15,10 +16,11 @@ function App() {
     <div className="App">
       {/* <ToggleExample /> */}
       {/* <ArrayExample /> */}
-      <CounterExample />
+      {/* <CounterExample /> */}
+      <StateWithValidationExample />
       <hr />
       {/* <StateWithHistoryExample /> */}
-      <RenderCountExample />
+      {/* <RenderCountExample /> */}
       {/* <MergedStateExample /> */}
       {/* <PreviousExample /> */}
       {/* <UpdateEffectExample /> */}
@@ -209,6 +211,25 @@ function MergedStateExample() {
         <br />
         <button type="submit">Submit</button>
       </form>
+    </div>
+  )
+}
+
+function StateWithValidationExample() {
+  const [username, setUsername, isUsernameValid] = useStateWithValidation(
+    '',
+    username => username.length > 5,
+  )
+
+  const [age, setAge, isAgeValid] = useStateWithValidation(0, age => 0 < age && age < 200)
+
+  return (
+    <div>
+      <div>Username valid: {isUsernameValid.toString()}</div>
+      <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
+      <hr />
+      <div>Age valid: {isAgeValid.toString()}</div>
+      <input type="number" value={age} onChange={e => setAge(Number(e.target.value))} />
     </div>
   )
 }

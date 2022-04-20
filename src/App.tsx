@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import useArray from './hooks/useArray'
 import useCounter from './hooks/useCounter'
+import useInterval from './hooks/useInterval'
 import useLocalStorage from './hooks/useLocalStorage'
 import useMergedState from './hooks/useMergedState'
 import usePrevious from './hooks/usePrevious'
@@ -12,12 +13,18 @@ import useToggle from './hooks/useToggle'
 import useUpdateEffect from './hooks/useUpdateEffect'
 
 function App() {
+  const [isMounted, setIsMounted] = React.useState(true)
+
   return (
     <div className="App">
       {/* <ToggleExample /> */}
       {/* <ArrayExample /> */}
       {/* <CounterExample /> */}
-      <StateWithValidationExample />
+      {/* <StateWithValidationExample /> */}
+
+      {isMounted && <IntervalExample />}
+      <button onClick={() => setIsMounted(false)}>Unmount</button>
+
       <hr />
       {/* <StateWithHistoryExample /> */}
       {/* <RenderCountExample /> */}
@@ -270,6 +277,20 @@ function UpdateEffectExample() {
       <button onClick={() => decrement()}>Minus</button>
     </div>
   )
+}
+
+// 1. interval -> increment -> increment -> increment
+// 2. interval -> increment -> increment
+// 3. interval -> increment
+
+function IntervalExample() {
+  const [counter, setCounter] = useState(0)
+  // const { value: counter, increment } = useCounter(0)
+
+  // useInterval(increment, 1000)
+  useInterval(() => setCounter(counter + 1), 1000)
+
+  return <div>{counter}</div>
 }
 
 const Component = React.memo((props: any) => {

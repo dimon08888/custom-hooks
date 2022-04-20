@@ -1,40 +1,41 @@
-import { useState } from 'react'
+import { useRef, useState, useCallback } from 'react'
 
 export default function useCounter(initialValue: number) {
   // const [initialValueCopy] = React.useReducer(value => value, initialValue)
   // const initialValueCopy = React.useRef(initialValue).current
   // const initialValueCopy = React.useMemo(() => initialValue, [])
+  // const [initialValueCopy] = useState(initialValue)
 
-  const [initialValueCopy] = useState(initialValue)
+  const initialValueRef = useRef(initialValue)
   const [value, setValue] = useState(initialValue)
 
-  function increment(value?: number) {
+  const increment = useCallback((value?: number) => {
     if (typeof value !== 'undefined') {
       setValue(value)
     } else {
       setValue(value => value + 1)
     }
-  }
+  }, [])
 
-  function decrement(value?: number) {
+  const decrement = useCallback((value?: number) => {
     if (typeof value !== 'undefined') {
       setValue(value)
     } else {
       setValue(value => value - 1)
     }
-  }
+  }, [])
 
-  function reset() {
-    setValue(initialValueCopy)
-  }
+  const reset = useCallback(() => {
+    setValue(initialValueRef.current)
+  }, [])
 
-  function double() {
+  const double = useCallback(() => {
     setValue(value => value * 2)
-  }
+  }, [])
 
-  function set(value: number) {
+  const set = useCallback((value: number) => {
     setValue(value)
-  }
+  }, [])
 
   return { value, increment, decrement, reset, double, set }
 }

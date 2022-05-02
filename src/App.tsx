@@ -11,8 +11,11 @@ function App() {
       {/* <CounterExample /> */}
       {/* <StateWithValidationExample /> */}
 
-      {isMounted && <RefExample />}
-      <button onClick={() => setIsMounted(false)}>Unmount</button>
+      {/* <ClickOutsideExample /> */}
+      {/* <ClassComponent /> */}
+
+      {/* {isMounted && <RefExample />}
+      <button onClick={() => setIsMounted(false)}>Unmount</button> */}
 
       {/* {isMounted && <IntervalExample />}
       <button onClick={() => setIsMounted(false)}>Unmount</button>
@@ -26,6 +29,22 @@ function App() {
     </div>
   )
 }
+
+// class ClassComponent extends React.Component {
+//   element: HTMLDivElement | null = null
+
+//   componentDidMount() {
+//     console.log(this.element)
+//   }
+
+//   componentDidUpdate() {
+//     this.element = new HTMLDivElement()
+//   }
+
+//   render() {
+//     return <div ref={element => (this.element = element)}>Hello</div>
+//   }
+// }
 
 function RefExample() {
   const ref = useRef<HTMLDivElement>(null)

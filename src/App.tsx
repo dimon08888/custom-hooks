@@ -1,16 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import './App.css'
+import { Chat, StopWatch } from './components/UseRefExample'
+import Unmount from './utils/Unmount'
 
 function App() {
-  const [isMounted, setIsMounted] = React.useState(true)
-
   return (
     <div className='App'>
       {/* <ToggleExample /> */}
       {/* <ArrayExample /> */}
       {/* <CounterExample /> */}
       {/* <StateWithValidationExample /> */}
-
+      {/* <Unmount>
+        <StopWatch />
+      </Unmount> */}
+      <Chat />
       {/* <ClickOutsideExample /> */}
       {/* <ClassComponent /> */}
 
@@ -46,37 +49,38 @@ function App() {
 //   }
 // }
 
-function RefExample() {
-  const ref = useRef<HTMLDivElement>(null)
-  const [rect, setRect] = useState<DOMRect | null>(null)
+// function Counter() {
+//   const [obj, setObj] = useState({ current: 0 })
+//   const { increment } = useCounter(0)
 
-  useEffect(() => {
-    const listener = () => {
-      console.log('RESIZE')
-      if (ref.current) {
-        setRect(ref.current.getBoundingClientRect())
-      }
-    }
+//   return (
+//     <div>
+//       <div>Counter: {obj.current}</div>
+//       <button onClick={() => increment()}></button>
+//     </div>
+//   )
+// }
 
-    window.addEventListener('resize', listener)
+// function InputExample() {
+//   // const ref = useRef<HTMLInputElement>(null)
+//   const ref = useRef<HTMLSelectElement>(null)
 
-    if (ref.current) {
-      setRect(ref.current.getBoundingClientRect())
-    }
-
-    return () => {
-      window.removeEventListener('resize', listener)
-    }
-  }, [])
-
-  return (
-    <div ref={ref} style={{ border: '1px solid black' }}>
-      {rect
-        ? 'Width: ' + Math.floor(rect.width) + ' Height: ' + Math.floor(rect.height)
-        : 'Example here...'}
-    </div>
-  )
-}
+//   function handleInputColor() {
+//     if (ref.current) {
+//     }
+//   }
+//   return (
+//     <div>
+//       <select ref={ref}>
+//         <option>hop</option>
+//         <option>hep</option>
+//         <option>hap</option>
+//         <option>hyp</option>
+//       </select>
+//       <button onClick={handleInputColor}>Click me!</button>
+//     </div>
+//   )
+// }
 
 const Component = React.memo((props: any) => {
   console.log('RENDER')

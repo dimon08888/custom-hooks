@@ -1,13 +1,12 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 export default function useArray<Type>(initialValue: Type[]) {
-  const [initialValueCopy] = useState(initialValue)
+  const initialValueCopyRef = useRef(initialValue)
   const [array, setArray] = useState(initialValue)
 
-  const push = useCallback(
-    (value: Type) => setArray(currentArray => [...currentArray, value]),
-    [],
-  )
+  function push(value: Type) {
+    setArray(currentArray => [...currentArray, value])
+  }
 
   function remove(index: number) {
     // setArray(currentArray => {
@@ -43,12 +42,21 @@ export default function useArray<Type>(initialValue: Type[]) {
   }
 
   function reset() {
-    setArray(initialValueCopy)
+    setArray(initialValueCopyRef.current)
   }
 
   function filter(func: (value: Type) => boolean) {
     setArray(currentArray => currentArray.filter(func))
   }
 
-  return { array, push, remove, update, clear, set, reset, filter }
+  return {
+    array,
+    push: useCallback(push, []),
+    remove: useCallback(remove, []),
+    update: useCallback(update, []),
+    clear: useCallback(clear, []),
+    set: useCallback(set, []),
+    reset: useCallback(reset, []),
+    filter: useCallback(filter, []),
+  }
 }

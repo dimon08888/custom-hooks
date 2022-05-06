@@ -116,3 +116,26 @@ export function RefExample() {
     </div>
   )
 }
+
+export function Counter() {
+  const [count, setCount] = useState(0)
+  const intervalRef = useRef<NodeJS.Timer | null>(null)
+
+  function clear() {
+    if (intervalRef.current !== null) {
+      clearInterval(intervalRef.current)
+    }
+  }
+
+  useEffect(() => {
+    intervalRef.current = setInterval(() => setCount(count => count + 1), 1000)
+    return clear
+  }, [])
+
+  return (
+    <div>
+      <h1>{count}</h1>
+      <button onClick={clear}>Стоп</button>
+    </div>
+  )
+}

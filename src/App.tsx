@@ -1,6 +1,8 @@
 import React from 'react'
 import './App.css'
-import { Chat, StopWatch } from './components/UseRefExample'
+import UseFetchExample from './components/UseFetchExample'
+import { Chat, StopWatch, Counter } from './components/UseRefExample'
+import { UseEffectExample } from './components/useUseEffectExample'
 import Unmount from './utils/Unmount'
 
 function App() {
@@ -13,7 +15,10 @@ function App() {
       {/* <Unmount>
         <StopWatch />
       </Unmount> */}
-      <Chat />
+      {/* <Chat /> */}
+      {/* <Counter /> */}
+      {/* <UseEffectExample /> */}
+      <UseFetchExample />
       {/* <ClickOutsideExample /> */}
       {/* <ClassComponent /> */}
 

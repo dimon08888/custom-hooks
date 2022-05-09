@@ -17,8 +17,8 @@ function App() {
       </Unmount> */}
       {/* <Chat /> */}
       {/* <Counter /> */}
-      {/* <UseEffectExample /> */}
-      <UseFetchExample />
+      <UseEffectExample />
+      {/* <UseFetchExample /> */}
       {/* <ClickOutsideExample /> */}
       {/* <ClassComponent /> */}
 

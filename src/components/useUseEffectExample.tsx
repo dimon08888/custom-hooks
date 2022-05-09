@@ -1,11 +1,26 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import useToggle from '../hooks/useToggle'
 import Json from '../utils/Json'
+import Unmount from '../utils/Unmount'
 
 export function UseEffectExample() {
+  const [id, setId] = useState<number>(100)
+
+  function changeId() {
+    setId(id => (id === null ? 1 : id + 1))
+  }
   // const [enabled, toggle] = useToggle(false)
   // const [id, setId] = useState(2)
-  return null
+  return (
+    <div>
+      <Unmount>
+        <LifeCycle prop={id} />
+      </Unmount>
+      <button onClick={() => setId(id => id + 1)}>Update Prop</button>
+      {/* <UserID id={id} changeId={changeId} /> */}
+      {/* <RandomNum /> */}
+    </div>
+  )
   // <div>
   //   <FetchUser userId={id} />
   //   <button onClick={() => setId(id => id + 1)}>Change userId</button>
@@ -98,4 +113,79 @@ function FetchUsers({ enabled }: { enabled: boolean }) {
   }, [enabled])
 
   return <Json>{data}</Json>
+}
+
+function RandomNum() {
+  const [randomNum, setRandomNum] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRandomNum(Math.random())
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div>
+      <p>{randomNum}</p>
+    </div>
+  )
+}
+
+// "Mounted"
+// "Updated"
+// "Unmounted"
+function LifeCycle({ prop }: { prop: any }) {
+  const [state, setState] = useState(0)
+  const mountedRef = useRef([false, false])
+
+  useEffect(() => {
+    if (mountedRef.current[0]) {
+      console.log(`State updated to ${state}`)
+    } else {
+      mountedRef.current[0] = true
+    }
+  }, [state])
+
+  useEffect(() => {
+    if (mountedRef.current[1]) {
+      console.log(`Prop updated to ${prop}`)
+    } else {
+      mountedRef.current[1] = true
+    }
+  }, [prop])
+
+  useEffect(() => {
+    console.log('Mounted')
+    return () => console.log('Unmounted')
+  }, [])
+
+  return (
+    <div>
+      <button onClick={() => setState(prev => prev + 1)}>Update State</button>
+    </div>
+  )
+}
+
+function UserID({ id, changeId }: { id: number | null; changeId: () => void }) {
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    if (id === null) {
+      return
+    }
+    async function fetchUser() {
+      const response = await fetch(`https://swapi.dev/api/people/${id}`)
+      const user = await response.json()
+      setUser(user)
+    }
+    fetchUser()
+  }, [id])
+
+  return (
+    <div>
+      <Json indent>{user}</Json>
+      <button onClick={changeId}>ChangeID</button>
+    </div>
+  )
 }

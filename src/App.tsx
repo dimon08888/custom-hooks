@@ -1,5 +1,6 @@
 import React from 'react'
 import './App.css'
+import UseContextExample from './components/useContextExample'
 import UseFetchExample from './components/UseFetchExample'
 import { Chat, StopWatch, Counter } from './components/UseRefExample'
 import { UseEffectExample } from './components/useUseEffectExample'
@@ -17,10 +18,11 @@ function App() {
       </Unmount> */}
       {/* <Chat /> */}
       {/* <Counter /> */}
-      <UseEffectExample />
+      {/* <UseEffectExample /> */}
       {/* <UseFetchExample /> */}
       {/* <ClickOutsideExample /> */}
       {/* <ClassComponent /> */}
+      <UseContextExample />
 
       {/* {isMounted && <RefExample />}
       <button onClick={() => setIsMounted(false)}>Unmount</button> */}

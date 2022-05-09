@@ -147,6 +147,19 @@ function LifeCycle({ prop }: { prop: any }) {
     }
   }, [state])
 
+  // useState
+  // useRef
+  // useEffect
+  // useCallback
+  // useMemo
+
+  // useLayoutEffect
+  // useImperativeHandle
+  // useDebugValue
+
+  // useReducer
+  // useContext
+
   useEffect(() => {
     if (mountedRef.current[1]) {
       console.log(`Prop updated to ${prop}`)

@@ -4,9 +4,55 @@ import UseContextExample from './components/useContextExample'
 import UseFetchExample from './components/UseFetchExample'
 import { Chat, StopWatch, Counter } from './components/UseRefExample'
 import { UseEffectExample } from './components/useUseEffectExample'
+import { ToastProps } from './toast/Toast'
 import Unmount from './utils/Unmount'
+import { useState } from 'react'
+
+function ToastExample({ toast }: { toast: (props: ToastProps) => void }) {
+  return (
+    <div>
+      <button
+        onClick={() =>
+          toast({ type: 'success', message: 'Hello World', position: 'bottom-right' })
+        }
+      >
+        Make me a toast
+      </button>
+    </div>
+  )
+}
+
+function SendMessageForm({ sendMessage }: { sendMessage: (message: string) => void }) {
+  const inputRef = React.useRef<HTMLInputElement>(null)
+  return (
+    <div>
+      <input type='text' ref={inputRef} />
+      <button onClick={() => sendMessage(inputRef.current!.value)}>Send message</button>
+    </div>
+  )
+}
+
+function MessageList({ messages }: { messages: string[] }) {
+  return (
+    <ul>
+      {messages.map(str => (
+        <li>{str}</li>
+      ))}
+    </ul>
+  )
+}
 
 function App() {
+  const [messages, setMessages] = useState<string[]>([])
+
+  function sendMessage(str: string) {
+    setMessages(prevMessages => {
+      const newMessages = prevMessages.slice()
+      newMessages.push(str)
+      return newMessages
+    })
+  }
+
   return (
     <div className='App'>
       {/* <ToggleExample /> */}
@@ -22,11 +68,18 @@ function App() {
       {/* <UseFetchExample /> */}
       {/* <ClickOutsideExample /> */}
       {/* <ClassComponent /> */}
-      <UseContextExample />
+      {/* <ToastContext.Provider value={toast }> */}
 
+      <SendMessageForm sendMessage={sendMessage} />
+      <MessageList messages={messages} />
+
+      {/* <MessageExample sendMessage={undefined as any} />
+      {<div></div> } */}
+      {/* <ToastExample toast={undefined as any} /> */}
+      {/* </ToastContext.Provider> */}
+      {/* <UseContextExample /> */}
       {/* {isMounted && <RefExample />}
       <button onClick={() => setIsMounted(false)}>Unmount</button> */}
-
       {/* {isMounted && <IntervalExample />}
       <button onClick={() => setIsMounted(false)}>Unmount</button>
 

@@ -7,6 +7,9 @@ import { UseEffectExample } from './components/useUseEffectExample'
 import { ToastProps } from './toast/Toast'
 import Unmount from './utils/Unmount'
 import { useState } from 'react'
+import { User } from './context/class'
+import { TitleContextExample } from './context/function'
+import RenderPropsExample from './context/render-props'
 
 function ToastExample({ toast }: { toast: (props: ToastProps) => void }) {
   return (
@@ -44,12 +47,20 @@ function MessageList({ messages }: { messages: string[] }) {
 
 function App() {
   const [messages, setMessages] = useState<string[]>([])
-
   function sendMessage(str: string) {
     setMessages(prevMessages => {
       const newMessages = prevMessages.slice()
       newMessages.push(str)
       return newMessages
+    })
+  }
+
+  const [toasts, setToasts] = useState<ToastProps[]>([])
+  function sendToast(props: ToastProps) {
+    setToasts(prevToasts => {
+      const newToasts = prevToasts.slice()
+      newToasts.push(props)
+      return newToasts
     })
   }
 
@@ -69,13 +80,16 @@ function App() {
       {/* <ClickOutsideExample /> */}
       {/* <ClassComponent /> */}
       {/* <ToastContext.Provider value={toast }> */}
-
-      <SendMessageForm sendMessage={sendMessage} />
-      <MessageList messages={messages} />
-
+      {/* <TitleContextExample /> */}
+      {/* <SendMessageForm sendMessage={sendMessage} /> */}
+      {/* <MessageList messages={messages} /> */}
+      <RenderPropsExample />
+      {/* <User /> */}
       {/* <MessageExample sendMessage={undefined as any} />
       {<div></div> } */}
-      {/* <ToastExample toast={undefined as any} /> */}
+
+      {/* <ToastExample toast={sendToast} /> */}
+
       {/* </ToastContext.Provider> */}
       {/* <UseContextExample /> */}
       {/* {isMounted && <RefExample />}

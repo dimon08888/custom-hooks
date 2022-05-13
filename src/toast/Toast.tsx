@@ -1,4 +1,4 @@
-import { createContext } from 'react'
+import React, { useContext, createContext } from 'react'
 type ToastType = 'success' | 'error' | 'info' | 'warning' | 'debug'
 type ToastPosition = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 

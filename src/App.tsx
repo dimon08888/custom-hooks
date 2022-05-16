@@ -1,15 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.css'
-import { ToastProvider, useToast } from './toast/Toast'
+import ThemeProvider from './providers/ThemeProvider'
+import { ThemeContext, themes } from './providers/ThemeProvider'
+import { ToastProvider, useToast } from './providers/ToastProvider'
 
 function App() {
+  const [theme, setTheme] = useState(themes.light)
+
+  function toggleTheme() {
+    setTheme(theme => (theme === themes.light ? themes.dark : themes.light))
+  }
+
   return (
     <div className='App'>
-      <ToastProvider>
-        <RegisterForm />
-        <Menu />
-        <DeletePost />
-      </ToastProvider>
+      <button onClick={toggleTheme}>Change theme</button>
+      <ThemeContext.Provider value={theme}>
+        <ThemeProvider />
+        {/* <ToastProvider>
+          <RegisterForm />
+          <Menu />
+          <DeletePost />
+        </ToastProvider> */}
+      </ThemeContext.Provider>
     </div>
   )
 }
@@ -74,3 +86,25 @@ function DeletePost() {
 // regiseter -> submit -> toast()
 
 export default App
+
+// const [user, setUser] = useState(null)
+
+// function login() {}
+
+// function logout() {}
+
+// function authenticate() {}
+
+// const [language, setLanguage] = useState('ru')
+
+// function changeLanguage() {}
+
+// const [toasts, setToasts] = useState([])
+
+// function toast() {}
+
+// const [modal, setModal] = useState()
+
+// function openModal() {}
+
+// function closeModal() {}

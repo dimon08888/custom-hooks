@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import './App.css'
+import UseReducerExample from './components/UseReducerExample'
 import ThemeProvider from './providers/ThemeProvider'
 import { ThemeContext, themes } from './providers/ThemeProvider'
 import { ToastProvider, useToast } from './providers/ToastProvider'
+import { ShoppingList, Light, Keypad } from './components/UseReducerExample'
 
 function App() {
   const [theme, setTheme] = useState(themes.light)
@@ -13,14 +15,18 @@ function App() {
 
   return (
     <div className='App'>
-      <button onClick={toggleTheme}>Change theme</button>
+      {/* <button onClick={toggleTheme}>Change theme</button> */}
       <ThemeContext.Provider value={theme}>
-        <ThemeProvider />
+        {/* <ThemeProvider /> */}
         {/* <ToastProvider>
           <RegisterForm />
           <Menu />
           <DeletePost />
         </ToastProvider> */}
+        {/* <UseReducerExample /> */}
+        {/* <ShoppingList /> */}
+        {/* <Light /> */}
+        <Keypad />
       </ThemeContext.Provider>
     </div>
   )
